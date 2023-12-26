@@ -1,0 +1,51 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<form id="register-form" method="post">
+    {% csrf_token %}
+    <input required type="text" name="username" placeholder="Username">
+    <input required type="password" name="password" placeholder="Password">
+    <input required type="email" name="email" placeholder="email@website.com">
+    <input required type="text" name="first_name" placeholder="First Name">
+    <input required type="text" name="last_name" placeholder="Last Name">
+    <button type="submit">Register</button>
+</form>
+<script>
+    var form=document.getElementById('register-form')
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault()
+        submitFormData()
+    })
+
+    function submitFormData() {
+        console.log('Register button clicked')
+        var data = {
+            username: form.username.value,
+            password: form.password.value,
+            email: form.email.value,
+            first_name: form.first_name.value,
+            last_name: form.last_name.value,
+        }
+        fetch('/process_register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('POST Result:', data)
+            if(data.result == 'Success') {
+                alert('Registration success')
+                window.location.href = '/login'; // Redirect to the login page
+            }
+            else {
+                alert('Registration failed: ' + data.result)
+            }
+        })
+    }
+</script>
+{% endblock %}

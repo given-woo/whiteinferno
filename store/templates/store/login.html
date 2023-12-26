@@ -1,0 +1,51 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+<!-- login.html -->
+<form id="login-form" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Login</button>
+    <a href="{% url "register" %}">or register</a>
+</form>
+
+<script>
+    var form=document.getElementById('login-form')
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault()
+        submitFormData()
+    })
+
+    function submitFormData() {
+        console.log('Login button clicked')
+        var data = {
+            username: form.username.value,
+            password: form.password.value
+        }
+        fetch('/process_login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('POST Result:', data)
+            if(data.result == 'Wrong') {
+                alert('Wrong username or password')
+            } else if(data.result == 'Success') {
+                alert('Login success')
+                window.location.href = '/'; // Redirect to the home page
+            } else if(data.result == 'Account is inactive') {
+                alert('Account is inactive')
+            } else {
+                alert('Login failed')
+            }
+        })
+    }
+</script>
+{% endblock %}
