@@ -12,24 +12,27 @@ class Customer(models.Model):
         return self.name
 
 class Product(models.Model):
+    date_added = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=7, decimal_places=2)
-    digital = models.BooleanField(default=False,null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
+    price = models.DecimalField(max_digits=15, decimal_places=0)
+    thumbnail_image = models.ImageField(null=True, blank=True)
+    item_image = models.ImageField(null=True, blank=True)
     description = models.CharField(max_length=1000, null=True, blank=True)
     description_image = models.ImageField(null=True, blank=True)
+    type = models.CharField(max_length=200, null=True, blank=True)
+    digital = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     @property
-    def imageURL(self):
+    def thumbnailImageURL(self):
         try:
-            url = self.image.url
+            url = self.thumbnail_image.url
         except:
             url = ''
         return url
-    
+
     @property
     def descriptionImageURL(self):
         try:
@@ -37,6 +40,22 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
+    @property
+    def itemImageURL(self):
+        try:
+            url = self.item_image.url
+        except:
+            url = ''
+        return url
+
+class Collection(models.Model):
+    name = models.CharField(max_length=200)
+    date_added = models.DateTimeField(auto_now_add=True)
+    product = models.ManyToManyField(Product, related_name='collections', blank=True)
+
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
@@ -93,10 +112,26 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
-    
-class textBanner(models.Model):
+
+class ImageBanner(models.Model):
+    image = models.ImageField(null=False, blank=False)
+    collection = models.ForeignKey(Collection, on_delete=models.SET_NULL, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.image.url
+
+class TextBanner(models.Model):
     text = models.CharField(max_length=200, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.text
+
+class TwoColumnSection(models.Model):
+    title = models.CharField(max_length=200, null=False)
+    text = models.CharField(max_length=1000, null=False)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.title

@@ -1,18 +1,19 @@
 {% extends "store/main.html" %}
 {% load static %}
+{% load humanize %}
 {% load dict_helpers %}
 {% block content %}
 <div class="row">
     <div class="col-lg-6">
         <div class="box-element">
-            <img class="thumbnail" src="{{product.imageURL}}" alt="">
+            <img class="thumbnail" src="{{product.thumbnailImageURL}}" alt="">
         </div>
     </div>
     <div class="col-lg-6">
         <div class="box-element">
             <h1>{{product.name}}</h1>
             <p>{{product.description}}</p>
-            <h3>${{product.price}}</h3>
+            <h3>{{product.price|intcomma}}원</h3>
             <div>
                 <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
             </div>

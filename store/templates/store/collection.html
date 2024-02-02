@@ -2,24 +2,9 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
-<div style="height: 50px; width: 100vw;">
-    <p class="marquee" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
-    <p class="marquee marquee2" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
-</div>
 <div class="row">
     {% for product in products %}
+    {% if product.type == type or type == "all" %}
     <div class="col-lg-4">
         <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
         <div class="box-element product">
@@ -30,6 +15,7 @@
             <h4 style="display: inline-block; float: right;">{{product.price|intcomma}}원</h4>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock content %}
