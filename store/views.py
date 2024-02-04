@@ -15,9 +15,11 @@ def store(request):
 
 
     products = Product.objects.all()
-
+    twoColumnSections = TwoColumnSection.objects.all()
     banners = TextBanner.objects.all()
-    context = {'products': products, 'cartItems': cartItems, 'banners': banners}
+    imageBanners = ImageBanner.objects.all()
+
+    context = {'products': products, 'twoColumnSections': twoColumnSections, 'cartItems': cartItems, 'banners': banners, 'imageBanners': imageBanners}
     return render(request, 'store/store.html', context)
 
 def cart(request):

@@ -1,23 +1,207 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% load humanize %}
-{% block content %}
-<div style="height: 50px; width: 100vw;">
-    <p class="marquee" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
-    <p class="marquee marquee2" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
+
+
+{% block banner %}
+<!--PC BANNER -->
+<div class="main-banner pc">
+    <div class="owl-carousel owl-theme carousel-pc">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.image.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-pc"></div>
+    </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.carousel-pc').owlCarousel({
+            items: 2, // 한번에 보여지는 이미지 수
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            center: true,
+            dots: false,
+            onInitialized: startProgressBarPC,
+            onTranslate: resetProgressBarPC,
+            onTranslated: startProgressBarPC
+        });
+
+        function startProgressBarPC() {
+            $(".slide-progress-pc").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarPC() {
+            $(".slide-progress-pc").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBarPC(elem){
+            $elem = elem;
+            buildProgressBarPC();
+            start();
+        }
+    });
+</script>
+
+<!--TABLET BANNER -->
+<div class="main-banner tablet">
+    <div class="owl-carousel owl-theme carousel-tablet">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.image.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-tablet"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.carousel-tablet').owlCarousel({
+            items: 1, // 한번에 보여지는 이미지 수
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            dots: false,
+            onInitialized: startProgressBarTablet,
+            onTranslate: resetProgressBarTablet,
+            onTranslated: startProgressBarTablet
+        });
+
+        function startProgressBarTablet() {
+            $(".slide-progress-tablet").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarTablet() {
+            $(".slide-progress-tablet").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBarTablet(elem){
+            $elem = elem;
+            buildProgressBarTablet();
+            start();
+        }
+    });
+</script>
+
+<!--MOBILE BANNER -->
+<div class="main-banner mobile">
+    <div class="owl-carousel owl-theme carousel-mobile">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.mobile.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-mobile"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.carousel-mobile').owlCarousel({
+            items: 1,
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            dots: false,
+            onInitialized: startProgressBarMobile,
+            onTranslate: resetProgressBarMobile,
+            onTranslated: startProgressBarMobile
+        });
+
+        function startProgressBarMobile() {
+            $(".slide-progress-mobile").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarMobile() {
+            $(".slide-progress-mobile").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBar(elem){
+            $elem = elem;
+            buildProgressBarMobile();
+            start();
+        }
+    });
+</script>
+
+<div class="marquee">
+    <div class="marquee-content scroll">
+        {% for banner in banners %}
+        <div class="text">{{banner.text}}</div>
+        <div class="rect"></div>
+        {% endfor %}
+    </div>
+    <div class="marquee-content scroll">
+        {% for banner in banners %}
+        <div class="text">{{banner.text}}</div>
+        <div class="rect"></div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock banner %}
+
+
+{% block content %}
+
+{% for section in twoColumnSections %}
+{% if section.text_on_right %}
+<div class="row">
+    <div class="col-lg-6">
+        <img class="thumbnail" src="{{section.product.thumbnail_image.url}}" alt="" >
+        <img class="thumbnail" src="{{section.product.item_image.url}}" alt="" >
+    </div>
+    <div class="col-lg-6">
+        <p>{{section.title}}</p>
+        <p>{{section.product.name}}</p>
+        <p>{{section.text}}</p>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-lg-6">
+        <p>{{section.title}}</p>
+        <p>{{section.product.name}}</p>
+        <p>{{section.text}}</p>
+    </div>
+    <div class="col-lg-6">
+        <img class="thumbnail" src="{{section.product.thumbnail_image.url}}" alt="" >
+        <img class="thumbnail" src="{{section.product.item_image.url}}" alt="" >
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
 <div class="row">
     {% for product in products %}
     <div class="col-lg-4">

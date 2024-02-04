@@ -115,11 +115,12 @@ class ShippingAddress(models.Model):
 
 class ImageBanner(models.Model):
     image = models.ImageField(null=False, blank=False)
+    mobile = models.ImageField(null=False, blank=False)
     collection = models.ForeignKey(Collection, on_delete=models.SET_NULL, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.image.url
+        return self.collection.name
 
 class TextBanner(models.Model):
     text = models.CharField(max_length=200, null=False)
@@ -132,6 +133,7 @@ class TwoColumnSection(models.Model):
     title = models.CharField(max_length=200, null=False)
     text = models.CharField(max_length=1000, null=False)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    text_on_right = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
