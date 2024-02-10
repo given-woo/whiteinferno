@@ -1,0 +1,20 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="product-container row">
+    {% for product in products %}
+    {% if product.type == type or type == "all" %}
+    <div class="product col-lg-3">
+        <a href="{% url 'product_view' product.id %}">
+            <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
+        </a>
+        <div class="box-element text">
+            <p class="name">{{product.name}}</p>
+            <p class="price">{{product.price|intcomma}}원</p>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}

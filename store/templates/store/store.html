@@ -1,32 +1,381 @@
 {% extends 'store/main.html' %}
 {% load static %}
-{% block content %}
-<div style="height: 50px; width: 100vw;">
-    <p class="marquee" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
-    <p class="marquee marquee2" style="width: 100%">
-        <span>
-            {% for banner in banners %}
-                {{banner.text}}
-            {% endfor %}
-        </span>
-    </p>
+{% load humanize %}
+
+
+{% block banner %}
+<!--PC BANNER -->
+<div class="main-banner pc">
+    <div class="owl-carousel owl-theme carousel-pc">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.image.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-pc"></div>
+    </div>
 </div>
-<div class="row">
+<script>
+    $(document).ready(function(){
+        $('.carousel-pc').owlCarousel({
+            items: 2, // 한번에 보여지는 이미지 수
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            center: true,
+            dots: false,
+            onInitialized: startProgressBarPC,
+            onTranslate: resetProgressBarPC,
+            onTranslated: startProgressBarPC
+        });
+
+        function startProgressBarPC() {
+            $(".slide-progress-pc").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarPC() {
+            $(".slide-progress-pc").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBarPC(elem){
+            $elem = elem;
+            buildProgressBarPC();
+            start();
+        }
+    });
+</script>
+
+<!--TABLET BANNER -->
+<div class="main-banner tablet">
+    <div class="owl-carousel owl-theme carousel-tablet">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.image.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-tablet"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.carousel-tablet').owlCarousel({
+            items: 1, // 한번에 보여지는 이미지 수
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            dots: false,
+            onInitialized: startProgressBarTablet,
+            onTranslate: resetProgressBarTablet,
+            onTranslated: startProgressBarTablet
+        });
+
+        function startProgressBarTablet() {
+            $(".slide-progress-tablet").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarTablet() {
+            $(".slide-progress-tablet").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBarTablet(elem){
+            $elem = elem;
+            buildProgressBarTablet();
+            start();
+        }
+    });
+</script>
+
+<!--MOBILE BANNER -->
+<div class="main-banner mobile">
+    <div class="owl-carousel owl-theme carousel-mobile">
+        {% for banner in  imageBanners %}
+            <div class="item">
+                <a href="{% url 'collection_view' name=banner.collection.name type='all' %}">
+                    <img src="{{banner.mobile.url}}" alt="">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="slider-container">
+        <div class="slide-progress-mobile"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.carousel-mobile').owlCarousel({
+            items: 1,
+            loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+            autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+            autoplayTimeout: 8000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+            dots: false,
+            onInitialized: startProgressBarMobile,
+            onTranslate: resetProgressBarMobile,
+            onTranslated: startProgressBarMobile
+        });
+
+        function startProgressBarMobile() {
+            $(".slide-progress-mobile").css({
+                width: "100%",
+                transition: "width linear 8000ms",
+            });
+        }
+
+        function resetProgressBarMobile() {
+            $(".slide-progress-mobile").css({
+                width: 0,
+                transition: "width linear 0s",
+            });
+        }
+
+        function progressBar(elem){
+            $elem = elem;
+            buildProgressBarMobile();
+            start();
+        }
+    });
+</script>
+
+<div class="m-line"></div>
+
+<div class="marquee">
+    <div class="marquee-content scroll">
+        {% for banner in banners %}
+        <div class="text">{{banner.text}}</div>
+        <div class="rect"></div>
+        {% endfor %}
+    </div>
+    <div class="marquee-content scroll">
+        {% for banner in banners %}
+        <div class="text">{{banner.text}}</div>
+        <div class="rect"></div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="m-line"></div>
+
+{% endblock banner %}
+
+{% block sections %}
+<!--PC SECTIONS -->
+<div class="sections pc">
+    <div class="fashion-wrap row">
+        <div class="fashion col-lg-6">
+            <div class="owl-carousel owl-theme carousel-shirts">
+                {% for item in products %}
+                    {% if item.type == 'shirt' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="owl-carousel owl-theme carousel-pants">
+                {% for item in products %}
+                    {% if item.type == 'pants' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('.carousel-shirts').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                        nav: true,
+                        navText: ["<i class='fa-thin fa-chevron-left'></i>","<i class='fa-thin fa-chevron-right'></i>"],
+                    });
+                    $('.carousel-pants').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                        nav: true,
+                        navText: ["<i class='fa-thin fa-chevron-left'></i>","<i class='fa-thin fa-chevron-right'></i>"],
+                    });
+                });
+            </script>
+        </div>
+        <div class="text col-lg-3">
+            <p class="title">
+                FIND YOUR STYLE
+            </p>
+            <p class="description">
+               Find your style with carefully selected products.
+            </p>
+            <p class="description">
+                From steet to casual, from casual to formal, from formal to suit. we have all the products you need.
+            </p>
+        </div>
+    </div>
+    {% for section in twoColumnSections %}
+    <div class="m-line"></div>
+    {% if section.text_on_right %}
+    <div class="row section">
+        <div class="title">
+            {{section.title}}
+        </div>
+        <div class="col-lg-6 row">
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+                </a>
+            </div>
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6 text">
+            <div style="padding-right: 40%;">
+                <p class="name">{{section.product.name}}</p>
+                <p class="description">{{section.text}}</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row section">
+        <div class="title">
+                {{section.title}}
+        </div>
+        <div class="col-lg-6 text">
+            <p class="name">{{section.product.name}}</p>
+            <p class="description">{{section.text}}</p>
+        </div>
+        <div class="col-lg-6 row">
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+                </a>
+            </div>
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<!--TABLET, MOBILE SECTIONS -->
+<div class="sections tablet">
+    <div class="fashion-wrap row">
+        <div class="fashion col-lg-6">
+            <div class="owl-carousel owl-theme carousel-shirts">
+                {% for item in products %}
+                    {% if item.type == 'shirt' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="owl-carousel owl-theme carousel-pants">
+                {% for item in products %}
+                    {% if item.type == 'pants' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('.carousel-shirts').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                    });
+                    $('.carousel-pants').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    {% for section in twoColumnSections %}
+    <div class="m-line"></div>
+    <div class="section">
+        <div class="title">
+                {{section.title}}
+                <div>
+                    <a href="{% url 'product_view' section.product.id %}">
+
+                    </a>
+                </div>
+        </div>
+        <div class="text">
+            <p class="name">{{section.product.name}}</p>
+            <p class="description">{{section.text}}</p>
+        </div>
+        <div class="row">
+            <a class="col" href="{% url 'product_view' section.product.id %}" style="display: flex; justify-content: center; align-items: center;">
+                <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+            </a>
+            <a class="col" href="{% url 'product_view' section.product.id %}" style="display: flex; justify-content: center; align-items: center;">
+                <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock sections %}
+
+{% block content %}
+
+<div class="product-container row">
     {% for product in products %}
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{{product.image.url}}" alt="">
-        <div class="box-element product">
-            <h6><strong>{{product.name}}</strong></h6>
-            <hr>
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-            <a href="{% url "product_view" product.id %}" class="btn btn-outline-success">View</a>
-            <h4 style="display: inline-block; float: right;">${{product.price|floatformat:2}}</h4>
+    <div class="product col-lg-4">
+        <a href="{% url 'product_view' product.id %}">
+            <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
+        </a>
+        <div class="box-element text">
+            <p class="name">{{product.name}}</p>
+            <p class="price">{{product.price|intcomma}}원</p>
         </div>
     </div>
     {% endfor %}
