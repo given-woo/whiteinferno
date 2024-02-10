@@ -1,6 +1,6 @@
 console.log('logout.js running...')
 
-document.getElementById('logout-button').addEventListener('click', function(event) {
+document.getElementsByClassName('logout-button')[0].addEventListener('click', function(event) {
     event.preventDefault();
     fetch('/process_logout/', {
         method: 'POST',

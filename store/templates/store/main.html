@@ -8,6 +8,8 @@
 
     <link rel="icon" href="{% static 'images/logo.svg' %}" sizes="any" type="image/svg+xml">
 
+    <!--FONTAWESOME -->
+    <link href="https://cdn.jsdelivr.net/gh/eliyantosarage/font-awesome-pro@main/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -73,7 +75,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'store' %}">HOME</a>
+                        <a class="nav-link" href="{% url 'store' %}">HOME</a>
                     </li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -106,41 +108,48 @@
                         <li><a class="dropdown-item" href="{% url 'collection_view' name='man' type='acc' %}">ACC</a></li>
                       </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">NEWS</a>
-                    </li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         MASSION WHITEINFERNO
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Le Whiteinferno</a></li>
-                        <li><a class="dropdown-item" href="#">Show</a></li>
-                        <li><a class="dropdown-item" href="#">Project</a></li>
-                        <li><a class="dropdown-item" href="#">Campaign</a></li>
+                          <li><a class="dropdown-item" href="#">Le Whiteinferno</a></li>
+                          <li><a class="dropdown-item" href="#">News</a></li>
+                          <li><a class="dropdown-item" href="#">Show</a></li>
+                          <li><a class="dropdown-item" href="#">Project</a></li>
+                          <li><a class="dropdown-item" href="#">Campaign</a></li>
                       </ul>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    {% if user.is_authenticated %}
-                        <a class="btn btn-warning" id="logout-button">Logout</a>
-                    {% else %}
-                        <a href="{% url "login" %}" class="btn btn-warning">Login</a>
-                    {% endif %}
-                    <a id="cart-link" href="{% url 'cart' %}">
-                        <img id="cart-icon" src="{% static 'images/cart.png' %}" alt="Cart">
-                    </a>
-                    <p id="cart-total">{{cartItems}}</p>
+                <div class="btn_group row">
+                    <div class="auth col">
+                        {% if user.is_authenticated %}
+                        <a class="logout-button">Logout</a>
+                        {% else %}
+                        <a class="login-button" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                    <div class="cart col">
+                        <a class="cart-link" href="{% url 'cart' %}" style="text-decoration: none; color:#000;">
+                            CART
+                        </a>
+                        <p class="cart-total">({{cartItems}})</p>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="wrap" style="position: absolute; top: 80px; width: 100vw;">
-        <div class="banner">
-            {% block banner %}{% endblock banner %}
+    <div class="l_line"></div>
+    <div class="r_line"></div>
+
+    <div class="wrap">
+        {% block banner %}{% endblock banner %}
+        <div class="sections-wrap">
+            {% block sections %}{% endblock sections %}
         </div>
-        <div class="container">
+        <div class="m-line"></div>
+        <div class="content-wrap">
             {% block content %}{% endblock content %}
         </div>
     </div>

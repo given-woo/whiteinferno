@@ -2,17 +2,16 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
-<div class="row">
+<div class="product-container row">
     {% for product in products %}
     {% if product.type == type or type == "all" %}
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
-        <div class="box-element product">
-            <h6><strong>{{product.name}}</strong></h6>
-            <hr>
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-            <a href="{% url "product_view" product.id %}" class="btn btn-outline-success">View</a>
-            <h4 style="display: inline-block; float: right;">{{product.price|intcomma}}원</h4>
+    <div class="product col-lg-3">
+        <a href="{% url 'product_view' product.id %}">
+            <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
+        </a>
+        <div class="box-element text">
+            <p class="name">{{product.name}}</p>
+            <p class="price">{{product.price|intcomma}}원</p>
         </div>
     </div>
     {% endif %}

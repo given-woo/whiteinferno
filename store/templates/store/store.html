@@ -155,6 +155,8 @@
     });
 </script>
 
+<div class="m-line"></div>
+
 <div class="marquee">
     <div class="marquee-content scroll">
         {% for banner in banners %}
@@ -169,49 +171,211 @@
         {% endfor %}
     </div>
 </div>
+
+<div class="m-line"></div>
+
 {% endblock banner %}
 
+{% block sections %}
+<!--PC SECTIONS -->
+<div class="sections pc">
+    <div class="fashion-wrap row">
+        <div class="fashion col-lg-6">
+            <div class="owl-carousel owl-theme carousel-shirts">
+                {% for item in products %}
+                    {% if item.type == 'shirt' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="owl-carousel owl-theme carousel-pants">
+                {% for item in products %}
+                    {% if item.type == 'pants' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('.carousel-shirts').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                        nav: true,
+                        navText: ["<i class='fa-thin fa-chevron-left'></i>","<i class='fa-thin fa-chevron-right'></i>"],
+                    });
+                    $('.carousel-pants').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                        nav: true,
+                        navText: ["<i class='fa-thin fa-chevron-left'></i>","<i class='fa-thin fa-chevron-right'></i>"],
+                    });
+                });
+            </script>
+        </div>
+        <div class="text col-lg-3">
+            <p class="title">
+                FIND YOUR STYLE
+            </p>
+            <p class="description">
+               Find your style with carefully selected products.
+            </p>
+            <p class="description">
+                From steet to casual, from casual to formal, from formal to suit. we have all the products you need.
+            </p>
+        </div>
+    </div>
+    {% for section in twoColumnSections %}
+    <div class="m-line"></div>
+    {% if section.text_on_right %}
+    <div class="row section">
+        <div class="title">
+            {{section.title}}
+        </div>
+        <div class="col-lg-6 row">
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+                </a>
+            </div>
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-6 text">
+            <div style="padding-right: 40%;">
+                <p class="name">{{section.product.name}}</p>
+                <p class="description">{{section.text}}</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row section">
+        <div class="title">
+                {{section.title}}
+        </div>
+        <div class="col-lg-6 text">
+            <p class="name">{{section.product.name}}</p>
+            <p class="description">{{section.text}}</p>
+        </div>
+        <div class="col-lg-6 row">
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+                </a>
+            </div>
+            <div class="col-lg-6 section_image-wrap">
+                <a href="{% url 'product_view' section.product.id %}">
+                    <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<!--TABLET, MOBILE SECTIONS -->
+<div class="sections tablet">
+    <div class="fashion-wrap row">
+        <div class="fashion col-lg-6">
+            <div class="owl-carousel owl-theme carousel-shirts">
+                {% for item in products %}
+                    {% if item.type == 'shirt' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="owl-carousel owl-theme carousel-pants">
+                {% for item in products %}
+                    {% if item.type == 'pants' %}
+                    <div class="item">
+                        <a href="{% url 'product_view' item.id %}">
+                            <img src="{{item.item_image.url}}" alt="">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('.carousel-shirts').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                    });
+                    $('.carousel-pants').owlCarousel({
+                        items: 1, // 한번에 보여지는 이미지 수
+                        loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
+                        autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
+                        autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+                        dots: false,
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    {% for section in twoColumnSections %}
+    <div class="m-line"></div>
+    <div class="section">
+        <div class="title">
+                {{section.title}}
+                <div>
+                    <a href="{% url 'product_view' section.product.id %}">
+
+                    </a>
+                </div>
+        </div>
+        <div class="text">
+            <p class="name">{{section.product.name}}</p>
+            <p class="description">{{section.text}}</p>
+        </div>
+        <div class="row">
+            <a class="col" href="{% url 'product_view' section.product.id %}" style="display: flex; justify-content: center; align-items: center;">
+                <img class="section_image" src="{{section.product.thumbnail_image.url}}" alt="" >
+            </a>
+            <a class="col" href="{% url 'product_view' section.product.id %}" style="display: flex; justify-content: center; align-items: center;">
+                <img class="section_image" src="{{section.product.item_image.url}}" alt="" >
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock sections %}
 
 {% block content %}
 
-{% for section in twoColumnSections %}
-{% if section.text_on_right %}
-<div class="row">
-    <div class="col-lg-6">
-        <img class="thumbnail" src="{{section.product.thumbnail_image.url}}" alt="" >
-        <img class="thumbnail" src="{{section.product.item_image.url}}" alt="" >
-    </div>
-    <div class="col-lg-6">
-        <p>{{section.title}}</p>
-        <p>{{section.product.name}}</p>
-        <p>{{section.text}}</p>
-    </div>
-</div>
-{% else %}
-<div class="row">
-    <div class="col-lg-6">
-        <p>{{section.title}}</p>
-        <p>{{section.product.name}}</p>
-        <p>{{section.text}}</p>
-    </div>
-    <div class="col-lg-6">
-        <img class="thumbnail" src="{{section.product.thumbnail_image.url}}" alt="" >
-        <img class="thumbnail" src="{{section.product.item_image.url}}" alt="" >
-    </div>
-</div>
-{% endif %}
-{% endfor %}
-
-<div class="row">
+<div class="product-container row">
     {% for product in products %}
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
-        <div class="box-element product">
-            <h6><strong>{{product.name}}</strong></h6>
-            <hr>
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-            <a href="{% url "product_view" product.id %}" class="btn btn-outline-success">View</a>
-            <h4 style="display: inline-block; float: right;">{{product.price|intcomma}}원</h4>
+    <div class="product col-lg-4">
+        <a href="{% url 'product_view' product.id %}">
+            <img class="thumbnail" src="{{product.thumbnail_image.url}}" alt="">
+        </a>
+        <div class="box-element text">
+            <p class="name">{{product.name}}</p>
+            <p class="price">{{product.price|intcomma}}원</p>
         </div>
     </div>
     {% endfor %}
